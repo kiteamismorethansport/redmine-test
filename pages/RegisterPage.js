@@ -14,6 +14,16 @@ class RegisterPage {
     async clickOnRegister(){
         await this.page.locator(this.registerLink).click();
     }
+    async fillNewUser(username, password, name, surname, email){
+        await this.page.locator(this.inputNickname).fill(username)
+        await this.page.locator(this.inputPassword).fill(password)
+        await this.page.locator(this.inputPassConf).fill(password)
+        await this.page.locator(this.inputName).fill(name)
+        await this.page.locator(this.inputSurName).fill(surname)
+        await this.page.locator(this.inputEmail).fill(email)
+        await this.page.locator(this.inputSubmit).click();
+    }
+
     async fillTheRegisterFields(){
         await this.page.locator(this.inputNickname).fill('WhitePaper1')
         await this.page.locator(this.inputPassword).fill('WhitePaper001')

@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import { faker } from '@faker-js/faker/locale/en';
 import {MainPage} from '../pages/MainPage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
@@ -36,6 +37,19 @@ test('check search field', async ({page}) =>{
   await main.gotoMainPage();
   await main.insertTextToSearchField();
   await expect(page.locator('//h2[text()="Search"]')).toContainText('Search');
+})
+
+test('Register new user using valid randomly generated credentials', async ({page})=>{
+  const username = faker.internet.userName();
+  const password = faker.internet.password();
+  const email = faker.internet.exampleEmail();
+  const main = new MainPage(page);
+  const reg = new RegisterPage(page);
+
+  await main.gotoMainPage();
+  await reg.clickOnRegister();
+  await reg.fillNewUser(username, password, username, username, email);
+  await expect(page.locator('#flash_notice')).toContainText('Account was successfully created.');
 })
 
 test('Register new user using existing nickname', async ({page})=>{
